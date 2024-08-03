@@ -41,7 +41,7 @@ jobs:
           port: ${{vars.REMOTE_PORT}}
           script: |
             echo "Starting VPS Build"
-            echo "TARGET: $TARGET"
+            echo "TARGET: ${{vars.TARGET}}"
             # cd /var/www/chickelit.online
             # git pull origin main
             # npm install --only=prod
