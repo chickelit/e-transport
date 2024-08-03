@@ -1,31 +1,31 @@
 name: chickelit.online deployment
 
-on: 
-  push: 
+on:
+  push:
     branches: [main]
-  pull_request: 
+  pull_request:
     branches: [main]
-  
+
   workflow_dispatch:
 
-jobs: 
+jobs:
   build:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Build
-        run: npm run build
+        run: cd ${{vars.TARGET}} && ls && npm run build
   deploy-development:
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: development
       url: ${{vars.URL}}
     needs: build
-    steps: 
+    steps:
       - name: Repo Checkout
         uses: actions/checkout@v1
       - name: Hostinger Deployment
         uses: easingthemes/ssh-deploy@main
-        with: 
+        with:
           SSH_PRIVATE_KEY: ${{secrets.SERVER_SSH_KEY}}
           ARGS: "-rlgoDzvc --delete"
           SOURCE: "public/"
