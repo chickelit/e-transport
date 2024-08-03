@@ -9,6 +9,11 @@ on:
   workflow_dispatch:
 
 jobs: 
+  build: 
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Build 
+        run: echo Building the app
   deploy-development:
     runs-on: ubuntu-latest
     environment: 
@@ -27,8 +32,11 @@ jobs:
           REMOTE_USER: ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
-          script: |
-            cd /var/www/chickelit.online
-            git pull origin main
-            npm install
-            pm2 restart 1 --update-env
+      - name: VPS Build
+        uses: appleboy/ssh-action@v1.0.3
+        with: 
+          key: ${{secrets.SERVER_SSH_KEY}}
+          host: ${{vars.REMOTE_HOST}}
+          username: ${{vars.REMOTE_USER}}
+          port: ${{vars.REMOTE_PORT}}
+          script: whoami
