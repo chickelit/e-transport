@@ -34,9 +34,15 @@ jobs:
           TARGET: ${{vars.TARGET}}
       - name: VPS Build
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          PATH: ${{vars.TARGET}}
         with: 
           key: ${{secrets.SERVER_SSH_KEY}}
           host: ${{vars.REMOTE_HOST}}
           username: ${{vars.REMOTE_USER}}
           port: ${{vars.REMOTE_PORT}}
-          script: pwd
+          script: |
+            cd $PATH
+            npm install
+            npm run build
+            pm2 restart 1 --update-env
