@@ -34,16 +34,18 @@ jobs:
           TARGET: ${{vars.TARGET}}
       - name: VPS Build
         uses: appleboy/ssh-action@v1.0.3
-        env:
-          TARGET: ${{vars.TARGET}}
         with: 
           key: ${{secrets.SERVER_SSH_KEY}}
           host: ${{vars.REMOTE_HOST}}
           username: ${{vars.REMOTE_USER}}
           port: ${{vars.REMOTE_PORT}}
-          script: echo $TARGET
-          debug: true
+          script: |
+            echo "Starting VPS Build"
+            echo "TARGET: $TARGET"
             # cd /var/www/chickelit.online
             # git pull origin main
             # npm install --only=prod
             # npm run build --if-present
+          debug: true
+        env:
+          TARGET: ${{vars.TARGET}}
