@@ -41,7 +41,7 @@ jobs:
           host: ${{vars.REMOTE_HOST}}
           username: ${{vars.REMOTE_USER}}
           port: ${{vars.REMOTE_PORT}}
-          script: ls $TARGET
+          script: echo $TARGET
           debug: true
             # cd /var/www/chickelit.online
             # git pull origin main
