@@ -48,4 +48,4 @@ jobs:
             # npm run build --if-present
           debug: true
         env:
-          TARGET: ${{vars.TARGET}}
+          TARGET: /var/www/chickelit.online
