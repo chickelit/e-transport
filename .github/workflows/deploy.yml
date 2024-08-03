@@ -43,6 +43,4 @@ jobs:
           port: ${{vars.REMOTE_PORT}}
           script: |
             cd $PATH
-            npm install
-            npm run build
-            pm2 restart 1 --update-env
+            ls -la
