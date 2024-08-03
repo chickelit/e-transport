@@ -33,7 +33,7 @@ jobs:
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
       - name: VPS Build
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         env:
           PATH: ${{vars.TARGET}}
         with: 
