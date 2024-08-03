@@ -9,7 +9,7 @@ const app = express();
 app.use(morgan("dev"));
 
 app.get("/", (request, response) => {
-  return response.status(200).send("Hello, world!");
+  return response.status(200).send("This message is part of an update performed by github actions");
 });
 
 app.listen(port, () => {
