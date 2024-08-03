@@ -1,30 +1,30 @@
 name: chickelit.online deployment
 
-on: 
-  push: 
+on:
+  push:
     branches: [main]
-  pull_request: 
+  pull_request:
     branches: [main]
-  
+
   workflow_dispatch:
 
-jobs: 
-  build: 
+jobs:
+  build:
     runs-on: ubuntu-latest
-    steps: 
-      - name: Build 
+    steps:
+      - name: Build
         run: echo Building the app
   deploy-development:
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: development
       url: ${{vars.URL}}
-    steps: 
+    steps:
       - name: Repo Checkout
         uses: actions/checkout@v1
       - name: Hostinger Deployment
         uses: easingthemes/ssh-deploy@main
-        with: 
+        with:
           SSH_PRIVATE_KEY: ${{secrets.SERVER_SSH_KEY}}
           ARGS: "-rlgoDzvc --delete"
           SOURCE: "./"
@@ -34,18 +34,15 @@ jobs:
           TARGET: ${{vars.TARGET}}
       - name: VPS Build
         uses: appleboy/ssh-action@v1.0.3
-        with: 
+        with:
           key: ${{secrets.SERVER_SSH_KEY}}
           host: ${{vars.REMOTE_HOST}}
           username: ${{vars.REMOTE_USER}}
           port: ${{vars.REMOTE_PORT}}
           script: |
-            echo "Starting VPS Build"
-            echo "TARGET: ${{vars.TARGET}}"
-            # cd /var/www/chickelit.online
-            # git pull origin main
-            # npm install --only=prod
-            # npm run build --if-present
+            cd ${{vars.TARGET}}
+            git pull origin main
+            npm install --only=prod
+            npm run build --if-present
+            pm2 restart 1 --update-env
           debug: true
-        env:
-          TARGET: /var/www/chickelit.online
