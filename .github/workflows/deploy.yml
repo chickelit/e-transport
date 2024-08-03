@@ -39,4 +39,4 @@ jobs:
           host: ${{vars.REMOTE_HOST}}
           username: ${{vars.REMOTE_USER}}
           port: ${{vars.REMOTE_PORT}}
-          script: whoami
+          script: pwd
