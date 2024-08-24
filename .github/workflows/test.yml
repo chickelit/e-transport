@@ -24,6 +24,6 @@ jobs:
           npm run test
           git checkout -b master
           git fetch
-          git merge --ff-only origin/master --allow-unrelated-histories
+          git rebase origin/master
           git push -u origin master
 
