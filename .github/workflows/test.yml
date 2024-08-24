@@ -19,6 +19,6 @@ jobs:
         run: |
           npm install
           npm run test
-          git remote get-url origin
-          git push -u origin master
+          git branch -b master
+          git push -u origin master --force
 
