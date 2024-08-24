@@ -22,7 +22,7 @@ jobs:
         run: |
           npm install
           npm run test
-          git rebase
+          git config pull.rebase true
           git checkout -b master
           git pull origin master
           git push -u origin master
