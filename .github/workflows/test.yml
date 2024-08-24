@@ -19,14 +19,7 @@ jobs:
         run: |
           npm install
           npm run test
-      - name: Add github SSH Key
-        uses: webfactory/ssh-agent@v0.9.0
-        with: 
-          ssh-private-key: ${{ secrets.GH_SSH_KEY }}
-      - name: Push to master
-        run: |
           git init
           git remote add origin git@github.com:${{ vars.GH_USER }}/${{ vars.GH_REPO }}.git
           git push -u origin master
 
-          
