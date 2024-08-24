@@ -20,7 +20,7 @@ export class App {
     app.get("/v1", (request, response) => {
       if (request.query.approve) {
         return response.status(200).json({
-          message: "ok",
+          message: "I am a change that will make the test stage fail. I should be pushed on branch review, but not to branch master",
         });
       }
 

@@ -23,5 +23,5 @@ jobs:
           npm install
           npm run test
           git checkout -b master
-          git push -u origin master --force
+          git push -u origin master
 
