@@ -19,8 +19,10 @@ export class App {
 
     app.get("/v1", (request, response) => {
       if (request.query.approve) {
+				// I am a change that will make the test stage pass. I should be pushed on branch review, and then automatically pushed to branch master
+
         return response.status(200).json({
-          message: "I am a change that will make the test stage fail. I should be pushed on branch review, but not to branch master",
+          message: "ok",
         });
       }
 
