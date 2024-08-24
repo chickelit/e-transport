@@ -22,4 +22,5 @@ jobs:
       - name: Push to master
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ vars.GH_USER }}/${{ vars.GH_REPO }}.git
+          git branch master
           git push -u origin master
