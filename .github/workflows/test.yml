@@ -15,7 +15,11 @@ jobs:
         uses: actions/setup-node@v2
         with: 
           node-version: 18.17.1
-      - name: Run install, build and test
+      - name: Run test suites
         run: |
           npm install
           npm run test
+      - name: Push to master
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ vars.GITHUB_USER }}/${{ vars.GITHUB_REPO }}.git
+          git push -u origin master
