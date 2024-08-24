@@ -4,10 +4,13 @@
 		"module": "commonjs",
 		"rootDir": "./",
 		"moduleResolution": "node10",
-		"baseUrl": "./src",
+		"baseUrl": "./",
 		"paths": {
 			"Src/*": [
-				"./*"
+				"./src*"
+			],
+			"Tests/*": [
+				"./tests*"
 			]
 		},
 		"allowJs": true,
@@ -16,5 +19,9 @@
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"skipLibCheck": true
-	}
+	},
+	"include": [
+		"src/**/*.ts",
+		"tests/**/*.ts",
+	]
 }
