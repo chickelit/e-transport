@@ -8,8 +8,16 @@ const app = express();
 
 app.use(morgan("dev"));
 
-app.get("/", (request, response) => {
-  return response.status(200).send("Space top");
+app.get("/v1", (request, response) => {
+  if (request.query.approve) {
+    return response.status(200).json({
+      message: "ok",
+    });
+  }
+
+  return response.status(500).json({
+    message: "error",
+  });
 });
 
 app.listen(port, () => {
