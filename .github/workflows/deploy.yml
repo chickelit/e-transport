@@ -1,0 +1,50 @@
+name: chickelit.online deployment
+
+on:
+  push:
+    branches: [master]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: echo Building the app
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{vars.URL}}
+    steps:
+      - name: Repo Checkout
+        uses: actions/checkout@v1
+      - name: Hostinger Deployment
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{secrets.SERVER_SSH_KEY}}
+          SOURCE: "./"
+          REMOTE_HOST: ${{vars.REMOTE_HOST}}
+          REMOTE_USER: ${{vars.REMOTE_USER}}
+          REMOTE_PORT: ${{vars.REMOTE_PORT}}
+          TARGET: ${{vars.TARGET}}
+      - name: VPS Build
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          key: ${{secrets.SERVER_SSH_KEY}}
+          host: ${{vars.REMOTE_HOST}}
+          username: ${{vars.REMOTE_USER}}
+          port: ${{vars.REMOTE_PORT}}
+          script: |
+            echo "Setting up environment"
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+            git config --global --add safe.directory ${{vars.TARGET}}
+            cd ${{vars.TARGET}}
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart 1 --update-env
+          debug: true
